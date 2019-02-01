@@ -15,7 +15,7 @@ $config->channel = $_POST['channel_name'];
 
 $app = new Application(
     [
-        'config'       => $config,
+        'config' => $config,
     ]
 );
 $app->run();

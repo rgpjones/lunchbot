@@ -24,7 +24,7 @@ class Slack
         $content['username'] = 'Rotaman';
         $content['text'] = $message;
         $content['icon_emoji'] = ':calendar:';
-        $content['channel'] = $this->config->channel;
+        $content['channel'] = (string) $this->config->channel;
 
         $payload = sprintf("payload=%s", json_encode($content));
 

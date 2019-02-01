@@ -25,11 +25,15 @@ class Join implements Command
 
     public function getUsage()
     {
-        return '`join`: Join rota';
+        return '`join` [username]: Join rota. Add [username] to add someone else to the rota';
     }
 
     public function run(array $args, $username)
     {
+        $username = isset($args[0])
+            ? $args[0]
+            : $username;
+
         if (!isset($username)) {
             throw new \RunTimeException('No username found to join');
         }

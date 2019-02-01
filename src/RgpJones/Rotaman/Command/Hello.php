@@ -19,11 +19,11 @@ class Hello implements Command
 
     public function getUsage()
     {
-        return '`who`: Whose turn it is today';
+        return '`hello`: Say hello!';
     }
 
     public function run(array $args, $username)
     {
-        $this->slack->send("Hello!");
+        $this->slack->send("Hello {$username}!");
     }
 }
