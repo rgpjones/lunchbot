@@ -19,6 +19,10 @@ class CommandProvider implements ServiceProviderInterface
             return new Command\Cancel($app['rota_manager'], $app['slack']);
         };
 
+        $app['commands']['hello'] = function () use ($app) {
+            return new Command\Hello($app['slack']);
+        };
+
         $app['commands']['help'] = function () use ($app) {
             return new Command\Help($app['commands']);
         };

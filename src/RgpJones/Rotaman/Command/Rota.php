@@ -1,7 +1,6 @@
 <?php
 namespace RgpJones\Rotaman\Command;
 
-use DateTime;
 use RgpJones\Rotaman\Command;
 use RgpJones\Rotaman\RotaManager;
 use RgpJones\Rotaman\Slack;
@@ -35,10 +34,10 @@ class Rota implements Command
     {
         $days = count($this->rotaManager->getMembers());
 
-        $rota = $this->rotaManager->generateRota(new DateTime(), $days);
+        $rota = $this->rotaManager->generateRota(new \DateTime(), $days);
         $response = '';
         foreach ($rota as $date => $clubber) {
-            $date = new DateTime($date);
+            $date = new \DateTime($date);
             $response .= "{$date->format('l')}: {$clubber}\n";
         }
 
