@@ -24,6 +24,6 @@ class Hello implements Command
 
     public function run(array $args, $username)
     {
-        $this->slack->send("Hello {$username}!");
+        $this->slack->send("Hello!");
     }
 }

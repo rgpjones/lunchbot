@@ -25,7 +25,7 @@ class Join implements Command
 
     public function getUsage()
     {
-        return '`join` [username]: Join rota. Add [username] to add someone else to the rota';
+        return '`join`: Join rota';
     }
 
     public function run(array $args, $username)

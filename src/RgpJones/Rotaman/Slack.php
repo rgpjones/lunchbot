@@ -21,7 +21,7 @@ class Slack
 
     public function send($message)
     {
-        $content['username'] = 'Rotaman';
+        $content['username'] = 'Rotabot';
         $content['text'] = $message;
         $content['icon_emoji'] = ':calendar:';
         $content['channel'] = (string) $this->config->channel;
