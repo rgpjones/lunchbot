@@ -41,7 +41,7 @@ class Rota
         while (count($rota) < $days) {
             $dateKey = $this->getDateKey($date);
 
-            if (isset($this->rota[$dateKey])) {
+            if (isset($this->rota[$dateKey]) && $this->memberList->hasMember($this->rota[$dateKey])) {
                 $rota[$dateKey] = $this->rota[$dateKey];
                 $this->memberList->setCurrentMember($this->rota[$dateKey]);
             } else {

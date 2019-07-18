@@ -10,6 +10,11 @@ class MemberList
         $this->members = $members;
     }
 
+    public function hasMember($name)
+    {
+        return in_array($name, $this->members);
+    }
+
     public function addMember($name)
     {
         if (in_array($name, $this->members)) {
