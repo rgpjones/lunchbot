@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+    environment:
+      - GITHUB_TOKEN
+      - SYMFONY_ENV=dev
+      - WEB_HOST=rotaman.test
+      - START_CRON=true
+    volumes:
+      - .:/app
+    expose:
+      - 80
+      - 443
+    ports:
+      - '8180:80'
+      - '8443:443'
