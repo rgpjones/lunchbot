@@ -3,6 +3,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.3",
+        "sensio/framework-extra-bundle": "^5.4",
         "silex/silex": "*",
         "symfony/console": "^4.3",
         "symfony/dotenv": "4.3.*",
@@ -12,7 +13,8 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
-
+        "behat/behat": "^3.5",
+        "phpspec/phpspec": "^5.1"
     },
     "config": {
         "bin-dir": "bin",
@@ -42,18 +44,22 @@
         "symfony/polyfill-php56": "*"
     },
     "scripts": {
+        "acceptance": [
+            "bin/behat"
+        ],
         "spec": [
-            "vendor/bin/phpspec run"
+            "bin/phpspec run"
         ],
         "sniff": [
-            "vendor/bin/phpcs --standard=PSR2 src/"
+            "bin/phpcs --standard=PSR2 src/"
         ],
         "fix": [
-            "vendor/bin/phpcbf --standard=PSR2 src/"
+            "bin/phpcbf --standard=PSR2 src/"
         ],
         "test": [
             "@sniff",
-            "@spec"
+            "@spec",
+            "@acceptance"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
