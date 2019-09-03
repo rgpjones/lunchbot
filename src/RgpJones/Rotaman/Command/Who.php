@@ -28,6 +28,6 @@ class Who implements Command
     public function run(array $args, $username)
     {
         $member = $this->rotaManager->getMemberForDate(new DateTime());
-        $this->slack->send(sprintf('It is %s\'s turn today', $member));
+        $this->slack->send(sprintf('It is <@%s>\'s turn today', $member));
     }
 }
