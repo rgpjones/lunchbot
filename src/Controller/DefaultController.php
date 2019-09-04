@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use RgpJones\Rotaman\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,8 +25,23 @@ class DefaultController extends AbstractController
      */
     public function api(Request $request)
     {
-        return new Response(
-            'TOKEN: ' . $request->get('token')
+        $config = simplexml_load_file(__DIR__ . '/../../config.xml');
+
+        if ($request->get('token') != $config->token) {
+            throw new \RunTimeException('Invalid Request');
+        }
+
+        $config->user = $request->get('user_name');
+        $config->channel = $request->get('channel_name');
+
+        $app = new Application(
+            [
+                'config' => $config,
+            ]
         );
+        $app->run();
+//        return new Response(
+//            'TOKEN: ' . $request->get('token')
+//        );
     }
 }
