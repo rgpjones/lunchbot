@@ -4,6 +4,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use RgpJones\Rotaman\Application;
 use RgpJones\Rotaman\RotaManager;
+use RgpJones\Rotaman\Storage\NullStorage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,14 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 class FeatureContext implements SnippetAcceptingContext
 {
     private $username;
-    /**
-     * @var Application
-     */
+
     private $application;
 
-    /**
-     * @var Response
-     */
     private $response;
 
     private $config;
@@ -34,24 +30,23 @@ class FeatureContext implements SnippetAcceptingContext
     {
         $this->config = new SimpleXMLElement('<config/>');
         $this->config->webhook = 'http://example.com';
-        $this->storage = tempnam(sys_get_temp_dir(), 'LC');
+        $this->storage = new NullStorage();
 
         $this->application = new Application(
             [
-                'config'       => $this->config,
-                'storage_file' => $this->storage,
-                'debug'        => true
+                'config' => $this->config,
+                'storage' => $this->storage,
+                'debug' => true
             ]
         );
     }
-
 
     /**
      * @AfterScenario
      */
     public function tearDown()
     {
-        unlink($this->storage);
+        $this->storage = null;
     }
 
     /**

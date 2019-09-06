@@ -2,6 +2,7 @@
 
 namespace RgpJones\Rotaman;
 
+use RgpJones\Rotaman\Storage\FileStorage;
 use Silex\Application as BaseApplication;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +16,11 @@ class Application extends BaseApplication
         $app = $this;
         $app['config'] = $values['config'];
 
-        $app['storage'] = function () use ($values) {
-            return new Storage($values['config']->channel);
-        };
+        $app['storage'] = (array_key_exists('storage', $values))
+            ? $values['storage']
+            : function () use ($values) {
+                return new FileStorage($values['config']->channel);
+            };
 
         $app['rota_manager'] = function () use ($app) {
             return new RotaManager($app['storage']);

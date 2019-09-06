@@ -2,6 +2,7 @@
 namespace RgpJones\Rotaman;
 
 use DateTime;
+use RgpJones\Rotaman\Storage\Storage;
 
 class RotaManager
 {

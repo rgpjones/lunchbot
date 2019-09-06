@@ -1,10 +1,10 @@
 <?php
 
-namespace RgpJones\Rotaman;
+namespace RgpJones\Rotaman\Storage;
 
-class Storage
+class FileStorage implements Storage
 {
-    const STORAGE_FILE_PATH = '../../../var';
+    const STORAGE_FILE_PATH = '../../../../var';
 
     private $channel;
 
@@ -24,7 +24,7 @@ class Storage
         $this->file = $file;
     }
 
-    public function load()
+    public function load(): array
     {
         return (file_exists($this->file))
             ? json_decode(file_get_contents($this->file), true)
