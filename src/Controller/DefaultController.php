@@ -40,8 +40,7 @@ class DefaultController extends AbstractController
             ]
         );
         $app->run();
-//        return new Response(
-//            'TOKEN: ' . $request->get('token')
-//        );
+
+        return new Response('', Response::HTTP_ACCEPTED);
     }
 }
