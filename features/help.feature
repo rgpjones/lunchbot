@@ -10,6 +10,7 @@ Feature: Get Command Help
     """
 /rota <command>
 `cancel` [date]: Cancel rota for today, or on date specified (Y-m-d)
+`hello`: Say hello!
 `help`: Display this help text
 `join`: Join rota
 `kick` <person>: Remove person from rota
@@ -28,6 +29,7 @@ Feature: Get Command Help
       """
 /rota <command>
 `cancel` [date]: Cancel rota for today, or on date specified (Y-m-d)
+`hello`: Say hello!
 `help`: Display this help text
 `join`: Join rota
 `kick` <person>: Remove person from rota

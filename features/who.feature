@@ -9,5 +9,5 @@ Feature: Rota users can see whose turn it is today
     When I type "/rota who"
     Then I should see in the channel
     """
-    It is test2's turn today
+    It is <@test2>'s turn today
     """
