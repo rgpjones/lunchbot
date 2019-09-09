@@ -1,4 +1,4 @@
-# Rotaman
+# Rotabot
 
 Rota Manager
 

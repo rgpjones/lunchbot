@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use RgpJones\Rotaman\Application;
+use RgpJones\Rotabot\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

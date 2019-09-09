@@ -2,9 +2,9 @@
 
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
-use RgpJones\Rotaman\Application;
-use RgpJones\Rotaman\RotaManager;
-use RgpJones\Rotaman\Storage\NullStorage;
+use RgpJones\Rotabot\Application;
+use RgpJones\Rotabot\RotaManager;
+use RgpJones\Rotabot\Storage\NullStorage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
