@@ -1,0 +1,8 @@
+#!/bin/sh
+
+php composer.phar test
+if [ $? -ne 0 ]
+then
+    echo "Test suite failed"
+    exit 1
+fi
