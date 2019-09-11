@@ -11,7 +11,8 @@ class CommandProvider implements ServiceProviderInterface
      *
      * @param Container $app A Container instance
      */
-    public function register(Container $app) {
+    public function register(Container $app)
+    {
 
         $app['commands'] = new Container;
 

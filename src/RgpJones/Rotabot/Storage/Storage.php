@@ -3,7 +3,6 @@
 
 namespace RgpJones\Rotabot\Storage;
 
-
 interface Storage
 {
     public function load(): array;

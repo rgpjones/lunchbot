@@ -45,7 +45,6 @@ class Application extends BaseApplication
                 $response = $command->run($argv, $request->get('user_name'));
 
                 return new Response($response);
-            }
-        );
+        });
     }
 }
