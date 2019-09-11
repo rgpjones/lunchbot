@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use RgpJones\Rotabot\Application;
+use RgpJones\Rotabot\SlackCredentials;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,14 +14,15 @@ class ApiController extends AbstractController
     /**
      * @Route("/", methods={"POST"})
      */
-    public function api(Request $request)
+    public function api(Request $request, SlackCredentials $slackCredentials)
     {
-        $config = simplexml_load_file(__DIR__ . '/../../config.xml');
-
-        if ($request->get('token') != $config->token) {
+        if ($request->get('token') != $slackCredentials->getSlackToken()) {
             throw new \RunTimeException('Invalid Request');
         }
 
+        $config = new \stdClass;
+        $config->token = $slackCredentials->getSlackToken();
+        $config->webhook = $slackCredentials->getSlackWebhookUrl();
         $config->user = $request->get('user_name');
         $config->channel = $request->get('channel_name');
 

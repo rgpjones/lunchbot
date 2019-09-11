@@ -30,3 +30,8 @@ services:
 
     RgpJones\:
         resource: '../src/RgpJones/*'
+
+    RgpJones\Rotabot\SlackCredentials:
+        arguments:
+            - "%env(SLACK_CALLBACK_HOOK)%"
+            - "%env(SLACK_TOKEN)%"

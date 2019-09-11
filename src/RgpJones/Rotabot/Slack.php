@@ -13,7 +13,7 @@ class Slack
     private $debug;
     private $messages;
 
-    public function __construct(SimpleXMLElement $config, $debug = false)
+    public function __construct(object $config, $debug = false)
     {
         $this->config = $config;
         $this->debug = $debug;
