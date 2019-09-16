@@ -31,6 +31,25 @@ services:
     RgpJones\:
         resource: '../src/RgpJones/*'
 
+    Monolog\Handler\StreamHandler:
+        arguments:
+            - "%env(LOG_FILE)%"
+
+    Monolog\Handler\SyslogHandler:
+        arguments:
+            - "barry"
+
+    Monolog\Logger:
+        arguments:
+            - "application.logger"
+        calls:
+            - method: pushHandler
+              arguments:
+                  - "@Monolog\\Handler\\StreamHandler"
+            - method: pushHandler
+              arguments:
+                  - "@Monolog\\Handler\\SyslogHandler"
+
     RgpJones\Rotabot\Slack\SlackCredentials:
         arguments:
             - "%env(SLACK_CALLBACK_HOOK)%"
