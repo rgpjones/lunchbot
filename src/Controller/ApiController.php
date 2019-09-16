@@ -14,7 +14,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/", methods={"POST"})
      */
-    public function api(Request $request, SlackCredentials $slackCredentials)
+    public function api(Request $request, SlackCredentials $slackCredentials): Response
     {
         if ($request->get('token') != $slackCredentials->getSlackToken()) {
             throw new \RunTimeException('Invalid Request');
@@ -31,7 +31,12 @@ class ApiController extends AbstractController
                 'config' => $config,
             ]
         );
-        $app->run();
+
+        $response = (string) $app->run();
+
+        if (strlen($response) > 0) {
+            return new Response($response, Response::HTTP_OK);
+        }
 
         return new Response('', Response::HTTP_ACCEPTED);
     }
