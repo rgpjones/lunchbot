@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Monolog\Logger;
 use RgpJones\Rotabot\Application;
 use RgpJones\Rotabot\Slack\SlackCredentials;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,6 +12,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ApiController extends AbstractController
 {
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+    public function __construct(Logger $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @Route("/", methods={"POST"})
      */
@@ -29,6 +40,7 @@ class ApiController extends AbstractController
         $app = new Application(
             [
                 'config' => $config,
+                'logger' => $this->logger
             ]
         );
 

@@ -16,6 +16,7 @@ class Application extends BaseApplication
 
         $app = $this;
         $app['config'] = $values['config'];
+        $app['logger'] = $values['logger'];
 
         $app['storage'] = (array_key_exists('storage', $values))
             ? $values['storage']
