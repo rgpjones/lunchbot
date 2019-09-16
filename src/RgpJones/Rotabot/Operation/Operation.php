@@ -1,7 +1,7 @@
 <?php
-namespace RgpJones\Rotabot;
+namespace RgpJones\Rotabot\Operation;
 
-interface Command
+interface Operation
 {
     /**
      * @return string

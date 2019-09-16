@@ -1,11 +1,10 @@
 <?php
-namespace RgpJones\Rotabot\Command;
+namespace RgpJones\Rotabot\Operation;
 
-use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Slack\Slack;
 
-class Rota implements Command
+class Rota implements Operation
 {
     const MAX_DAYS = 20;
 

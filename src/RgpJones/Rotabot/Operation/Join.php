@@ -1,11 +1,10 @@
 <?php
-namespace RgpJones\Rotabot\Command;
+namespace RgpJones\Rotabot\Operation;
 
-use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Slack\Slack;
 
-class Join implements Command
+class Join implements Operation
 {
     /**
      * @var RotaManager

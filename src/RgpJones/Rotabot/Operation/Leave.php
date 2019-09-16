@@ -1,18 +1,13 @@
 <?php
-namespace RgpJones\Rotabot\Command;
+namespace RgpJones\Rotabot\Operation;
 
-use DateTime;
-use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Slack\Slack;
 
-class Who implements Command
+class Leave implements Operation
 {
     protected $rotaManager;
-    /**
-     * @var Slack
-     */
-    private $slack;
+    protected $slack;
 
     public function __construct(RotaManager $rotaManager, Slack $slack)
     {
@@ -22,12 +17,16 @@ class Who implements Command
 
     public function getUsage()
     {
-        return '`who`: Whose turn it is today';
+        return '`leave`: Leave rota';
     }
 
     public function run(array $args, $username)
     {
-        $member = $this->rotaManager->getMemberForDate(new DateTime());
-        $this->slack->send(sprintf('It is <@%s>\'s turn today', $member));
+        if (!isset($username)) {
+            throw new \RunTimeException('No username found to leave');
+        }
+        $this->rotaManager->removeMember($username);
+
+        $this->slack->send("{$username} has left the rota");
     }
 }

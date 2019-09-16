@@ -2,11 +2,11 @@
 
 namespace RgpJones\Rotabot;
 
+use RgpJones\Rotabot\Operation\OperationProvider;
 use RgpJones\Rotabot\Slack\Slack;
 use RgpJones\Rotabot\Storage\FileStorage;
 use Silex\Application as BaseApplication;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class Application extends BaseApplication
 {
@@ -31,21 +31,24 @@ class Application extends BaseApplication
             return new Slack($app['config'], $app['debug']);
         };
 
-        $app->register(new CommandProvider);
+        $app->register(new OperationProvider);
 
-        $app->post('/', function (Request $request) use ($app) {
+        $app->post(
+            '/',
+            function (Request $request) use ($app) {
 
                 $argv = explode(' ', trim($request->get('text')));
-                $commandName = strtolower(array_shift($argv));
+                $operationName = strtolower(array_shift($argv));
 
-                /** @var Command $command */
-                $command = $app['commands']->offsetExists($commandName)
-                    ? $app['commands'][$commandName]
-                    : $app['commands']['help'];
+                /** @var Operation\Operation $operation */
+                $operation = $app['operations']->offsetExists($operationName)
+                    ? $app['operations'][$operationName]
+                    : $app['operations']['help'];
 
-                $response = $command->run($argv, $request->get('user_name'));
+                $result = (string) $operation->run($argv, $request->get('user_name'));
 
-                return new Response($response);
-        });
+                return $result;
+            }
+        );
     }
 }

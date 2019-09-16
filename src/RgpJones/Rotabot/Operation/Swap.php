@@ -1,12 +1,11 @@
 <?php
-namespace RgpJones\Rotabot\Command;
+namespace RgpJones\Rotabot\Operation;
 
-use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Slack\Slack;
 use DateTime;
 
-class Swap implements Command
+class Swap implements Operation
 {
     protected $rotaManager;
     protected $slack;

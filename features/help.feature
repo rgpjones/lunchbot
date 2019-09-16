@@ -8,7 +8,7 @@ Feature: Get Command Help
     When I type "/rota help"
     Then I should see
     """
-/rota <command>
+/rota <operation>
 `cancel` [date]: Cancel rota for today, or on date specified (Y-m-d)
 `hello`: Say hello!
 `help`: Display this help text
@@ -25,7 +25,7 @@ Feature: Get Command Help
       When I type "/rota asiudhoaisdh"
       Then I should see
       """
-/rota <command>
+/rota <operation>
 `cancel` [date]: Cancel rota for today, or on date specified (Y-m-d)
 `hello`: Say hello!
 `help`: Display this help text

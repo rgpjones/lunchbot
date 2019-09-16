@@ -83,7 +83,7 @@ class FeatureContext implements SnippetAcceptingContext
     public function iShouldSee(PyStringNode $string)
     {
         if (strpos($this->response->getContent(), (string) $string) === false) {
-            throw new Exception(sprintf('Expected %s but got %s', $string, $this->response->getContent()));
+            throw new Exception(sprintf("Expected:\n%s\nbut got\n%s\n", $string, $this->response->getContent()));
         }
     }
 

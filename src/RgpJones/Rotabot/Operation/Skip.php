@@ -1,11 +1,10 @@
 <?php
-namespace RgpJones\Rotabot\Command;
+namespace RgpJones\Rotabot\Operation;
 
 use DateTime;
-use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\RotaManager;
 
-class Skip implements Command
+class Skip implements Operation
 {
     /**
      * @var RotaManager
@@ -15,12 +14,12 @@ class Skip implements Command
     /**
      * @var Who
      */
-    private $whoCommand;
+    private $whoOperation;
 
-    public function __construct(RotaManager $rotaManager, Who $whoCommand)
+    public function __construct(RotaManager $rotaManager, Who $whoOperation)
     {
         $this->rotaManager = $rotaManager;
-        $this->whoCommand = $whoCommand;
+        $this->whoOperation = $whoOperation;
     }
 
     public function getUsage()
@@ -31,6 +30,6 @@ class Skip implements Command
     public function run(array $args, $username)
     {
         $this->rotaManager->skipMemberForDate(new DateTime());
-        $this->whoCommand->run([], $username);
+        $this->whoOperation->run([], $username);
     }
 }

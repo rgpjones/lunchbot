@@ -1,11 +1,10 @@
 <?php
-namespace RgpJones\Rotabot\Command;
+namespace RgpJones\Rotabot\Operation;
 
-use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Slack\Slack;
 
-class Leave implements Command
+class Kick implements Operation
 {
     protected $rotaManager;
     protected $slack;
@@ -18,16 +17,18 @@ class Leave implements Command
 
     public function getUsage()
     {
-        return '`leave`: Leave rota';
+        return '`kick` <person>: Remove person from rota';
     }
 
     public function run(array $args, $username)
     {
-        if (!isset($username)) {
+        if (!isset($args[0])) {
             throw new \RunTimeException('No username found to leave');
         }
-        $this->rotaManager->removeMember($username);
+        $user = $args[0];
 
-        $this->slack->send("{$username} has left the rota");
+        $this->rotaManager->removeMember($user);
+
+        $this->slack->send("{$username} removed {$user} from the rota");
     }
 }

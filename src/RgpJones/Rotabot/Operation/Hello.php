@@ -1,11 +1,10 @@
 <?php
 
-namespace RgpJones\Rotabot\Command;
+namespace RgpJones\Rotabot\Operation;
 
-use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\Slack\Slack;
 
-class Hello implements Command
+class Hello implements Operation
 {
     /**
      * @var Slack
@@ -24,6 +23,7 @@ class Hello implements Command
 
     public function run(array $args, $username)
     {
-        $this->slack->send("Hello!");
+        $this->slack->send('Hello!');
+        return '';
     }
 }
