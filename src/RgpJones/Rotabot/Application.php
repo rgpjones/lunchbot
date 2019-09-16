@@ -41,12 +41,16 @@ class Application extends BaseApplication
                 $argv = explode(' ', trim($request->get('text')));
                 $operationName = strtolower(array_shift($argv));
 
+                $app['logger']->info('Received operation ' . $operationName);
+
                 /** @var Operation\Operation $operation */
                 $operation = $app['operations']->offsetExists($operationName)
                     ? $app['operations'][$operationName]
                     : $app['operations']['help'];
 
                 $result = (string) $operation->run($argv, $request->get('user_name'));
+
+                $app['logger']->info('Result: ' . $result);
 
                 return $result;
             }

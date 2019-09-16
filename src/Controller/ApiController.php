@@ -46,10 +46,14 @@ class ApiController extends AbstractController
 
         $response = (string) $app->run();
 
+        $this->logger->info('Response: ' . $response);
+
         if (strlen($response) > 0) {
+            $this->logger->info('HTTP Code: ' . RESPONSE::HTTP_OK);
             return new Response($response, Response::HTTP_OK);
         }
 
+        $this->logger->info('HTTP Code: ' . Response::HTTP_ACCEPTED);
         return new Response('', Response::HTTP_ACCEPTED);
     }
 }
