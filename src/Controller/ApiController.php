@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use RgpJones\Rotabot\Application;
-use RgpJones\Rotabot\SlackCredentials;
+use RgpJones\Rotabot\Slack\SlackCredentials;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

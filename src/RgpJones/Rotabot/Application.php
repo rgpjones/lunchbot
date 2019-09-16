@@ -2,6 +2,7 @@
 
 namespace RgpJones\Rotabot;
 
+use RgpJones\Rotabot\Slack\Slack;
 use RgpJones\Rotabot\Storage\FileStorage;
 use Silex\Application as BaseApplication;
 use Symfony\Component\HttpFoundation\Request;

@@ -4,7 +4,6 @@ namespace RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\RotaManager;
 use DateTime;
-use RgpJones\Rotabot\Slack;
 
 class Paid implements Command
 {

@@ -1,7 +1,5 @@
 <?php
-namespace RgpJones\Rotabot;
-
-use SimpleXMLElement;
+namespace RgpJones\Rotabot\Slack;
 
 class Slack
 {

@@ -3,7 +3,7 @@ namespace RgpJones\Rotabot\Command;
 
 use RgpJones\Rotabot\Command;
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Slack;
+use RgpJones\Rotabot\Slack\Slack;
 
 class Kick implements Command
 {

@@ -1,7 +1,6 @@
 <?php
 
-
-namespace RgpJones\Rotabot;
+namespace RgpJones\Rotabot\Slack;
 
 class SlackCredentials
 {
@@ -14,17 +13,11 @@ class SlackCredentials
         $this->slackToken = $slackToken;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSlackWebhookUrl()
     {
         return $this->slackWebhookUrl;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSlackToken()
     {
         return $this->slackToken;
