@@ -3,6 +3,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.3",
+        "monolog/monolog": "^2.0",
         "sensio/framework-extra-bundle": "^5.4",
         "silex/silex": "*",
         "symfony/console": "^4.3",
