@@ -14,8 +14,6 @@ class RotaManager
 
     private $memberList;
 
-    private $paymentCalendar;
-
     public function __construct(Storage $storage)
     {
         $this->storage = $storage;
@@ -25,13 +23,11 @@ class RotaManager
         $rota = isset($data['rota']) ? $data['rota'] : [];
         $cancelledDates = isset($data['cancelledDates']) ? $data['cancelledDates'] : [];
         $members = isset($data['members']) ? $data['members'] : [];
-        $paymentCalendar = isset($data['paymentCalendar']) ? $data['paymentCalendar'] : [];
 
         // Maintains members in order as they are in current rota
         $this->memberList = new MemberList($members);
         $this->dateValidator = new DateValidator($cancelledDates);
         $this->rota = new Rota($this->memberList, $this->dateValidator, $rota);
-        $this->paymentCalendar =  new PaymentCalendar($paymentCalendar);
     }
 
     public function __destruct()
@@ -41,7 +37,6 @@ class RotaManager
                 'members' => $this->memberList->getMembers(),
                 'cancelledDates' => $this->dateValidator->getCancelledDates(),
                 'rota' => $this->rota->getRota(),
-                'paymentCalendar' => $this->paymentCalendar->getPaymentCalendar(),
             ]);
         }
     }
@@ -73,7 +68,8 @@ class RotaManager
 
     public function setMemberForDate(DateTime $date, $member)
     {
-        return $this->rota->setMemberForDate($date, $member);
+        $this->rota->setMemberForDate($date, $member);
+        return null;
     }
 
     public function skipMemberForDate(DateTime $date)
@@ -89,20 +85,5 @@ class RotaManager
     public function swapMember(DateTime $date, $toName = null, $fromName = null)
     {
         return $this->rota->swapMember($date, $toName, $fromName);
-    }
-
-    public function getAmountMemberPaidForDate($date, $member)
-    {
-        return $this->paymentCalendar->getAmountMemberPaidForDate($date, $member);
-    }
-
-    public function memberPaidForDate(DateTime $date, $member, $amount)
-    {
-        return $this->paymentCalendar->memberPaidForDate($date, $member, $amount);
-    }
-
-    public function getWhoPaidForDate(DateTime $date)
-    {
-        return $this->paymentCalendar->getWhoPaidForDate($date);
     }
 }

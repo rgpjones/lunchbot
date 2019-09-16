@@ -14,7 +14,7 @@ class RotaManagerSpec extends ObjectBehavior
 
         $storage->load()->willReturn([]);
         $storage->save(
-            ['members' => $members, 'cancelledDates' => [], 'rota' => [], 'paymentCalendar' => []]
+            ['members' => $members, 'cancelledDates' => [], 'rota' => []]
         )->willReturn(null);
 
         $this->beConstructedWith($storage, new \DateTime());
@@ -31,7 +31,7 @@ class RotaManagerSpec extends ObjectBehavior
     {
         $storage->load()->willReturn(['members' => ['Alice', 'Bob', 'Chris', 'Dave']]);
         $storage->save(
-            ['members' => ['Alice', 'Chris', 'Dave'], 'cancelledDates' => [], 'rota' => [], 'paymentCalendar' => []]
+            ['members' => ['Alice', 'Chris', 'Dave'], 'cancelledDates' => [], 'rota' => []]
         )->willReturn(null);
 
         $this->beConstructedWith($storage, new \DateTime());
@@ -51,7 +51,7 @@ class RotaManagerSpec extends ObjectBehavior
 
         $storage->load()->willReturn(['members' => ['Dave', 'Alice', 'Bob', 'Chris']]);
         $storage->save(
-            ['members' => ['Chris', 'Dave', 'Alice', 'Bob'], 'cancelledDates' => [], 'rota' => $expectedRota, 'paymentCalendar' => []]
+            ['members' => ['Chris', 'Dave', 'Alice', 'Bob'], 'cancelledDates' => [], 'rota' => $expectedRota]
         )->willReturn(null);
 
         $this->beConstructedWith($storage);
@@ -86,7 +86,6 @@ class RotaManagerSpec extends ObjectBehavior
                 'members' => ['Alice', 'Bob', 'Chris', 'Dave', 'Elaine'],
                 'cancelledDates' => [],
                 'rota' => ($currentRota + $expectedRota),
-                'paymentCalendar' => []
             ]
         )->willReturn(null);
 
@@ -122,7 +121,6 @@ class RotaManagerSpec extends ObjectBehavior
                 'members' => ['Chris', 'Dave', 'Bob'],
                 'cancelledDates' => [],
                 'rota' => ($currentRota + $expectedRota),
-                'paymentCalendar' => []
             ]
         )->willReturn(null);
 
@@ -148,7 +146,6 @@ class RotaManagerSpec extends ObjectBehavior
                 'members' => $members,
                 'cancelledDates' => [],
                 'rota' => $expectedRota,
-                'paymentCalendar' => []
             ]
         )->willReturn(null);
 
@@ -175,7 +172,7 @@ class RotaManagerSpec extends ObjectBehavior
 
         $storage->load()->willReturn(['members' => $members, 'cancelledDates' => [], 'rota' => $currentRota]);
         $storage->save(
-            ['members' => $members, 'cancelledDates' => [], 'rota' => $expectedRota, 'paymentCalendar' => []]
+            ['members' => $members, 'cancelledDates' => [], 'rota' => $expectedRota]
         )->willReturn(null);
 
         $this->beConstructedWith($storage);
@@ -205,7 +202,6 @@ class RotaManagerSpec extends ObjectBehavior
                 'members' => $members,
                 'cancelledDates' => ['2010-01-05'],
                 'rota' => $expectedRota,
-                'paymentCalendar' => []
             ]
         )->willReturn(null);
 
@@ -237,97 +233,10 @@ class RotaManagerSpec extends ObjectBehavior
             'members' => ['Chris', 'Bob', 'Alice', 'Dave'],
             'cancelledDates' => [],
             'rota' => $updatedRota,
-            'paymentCalendar' => []
         ])->willReturn(null);
 
         $this->beConstructedWith($storage);
 
         $this->swapMember(new \DateTime('2010-01-01'), 'Chris')->shouldReturn($updatedRota);
-    }
-
-    function it_marks_member_as_paid(Storage $storage)
-    {
-        $storage->load()->willReturn([
-            'paymentCalendar' => [
-                '2010-03' => [
-                    'Alice' => (float) 20.00,
-                ]
-            ]
-        ]);
-
-        $storage->save([
-            'members' => [],
-            'cancelledDates' => [],
-            'rota' => [],
-            'paymentCalendar' => [
-                '2010-03' => [
-                    'Alice' => (float) 20.00,
-                    'Bob' => (float) 20.00,
-                ]
-            ]
-        ])->willReturn(null);
-
-        $this->beConstructedWith($storage);
-
-        $this->memberPaidForDate(
-            new \DateTime('2010-03-22'),
-            'Bob',
-            (float) 20.00
-        )->shouldReturn(true);
-    }
-
-    function it_returns_amount_member_as_paid(Storage $storage)
-    {
-        $storage->load()->willReturn([
-            'paymentCalendar' => [
-                '2010-03' => [
-                    'Alice' => (float) 20.00,
-                ]
-            ]
-        ]);
-
-        $storage->save([
-            'members' => [],
-            'cancelledDates' => [],
-            'rota' => [],
-            'paymentCalendar' => [
-                '2010-03' => [
-                    'Alice' => (float) 20.00,
-                ]
-            ]
-        ])->willReturn(null);
-
-        $this->beConstructedWith($storage);
-
-        $this->getAmountMemberPaidForDate(
-            new \DateTime('2010-03-16'),
-            'Alice'
-        )->shouldReturn(20.00);
-    }
-
-    function it_returns_who_paid_for_date(Storage $storage)
-    {
-        $storage->load()->willReturn([
-            'paymentCalendar' => [
-                '2010-03' => [
-                    'Alice' => (float) 20.00,
-                ]
-            ]
-        ]);
-
-        $storage->save([
-            'members' => [],
-            'cancelledDates' => [],
-            'rota' => [],
-            'paymentCalendar' => [
-                '2010-03' => [
-                    'Alice' => (float) 20.00,
-                ]
-            ]
-        ])->willReturn(null);
-
-        $this->beConstructedWith($storage);
-
-        $this->getWhoPaidForDate(new \DateTime('2010-03-16'))->shouldReturn(['Alice']);
     }
 }
