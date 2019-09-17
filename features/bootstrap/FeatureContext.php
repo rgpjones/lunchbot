@@ -2,6 +2,7 @@
 
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
+use Monolog\Logger;
 use RgpJones\Rotabot\Application;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Storage\NullStorage;
@@ -31,11 +32,13 @@ class FeatureContext implements SnippetAcceptingContext
         $this->config = new SimpleXMLElement('<config/>');
         $this->config->webhook = 'http://example.com';
         $this->storage = new NullStorage();
+        $logger = new Logger('test');
 
         $this->application = new Application(
             [
                 'config' => $this->config,
                 'storage' => $this->storage,
+                'logger' => $logger,
                 'debug' => true
             ]
         );
