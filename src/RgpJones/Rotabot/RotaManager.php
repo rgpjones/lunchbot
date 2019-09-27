@@ -43,7 +43,7 @@ class RotaManager
 
     public function addMember($name)
     {
-        $this->memberList->addMember($name);
+        $this->memberList->addMember($this->stripAt($name));
     }
 
     public function removeMember($name)
@@ -85,5 +85,10 @@ class RotaManager
     public function swapMember(DateTime $date, $toName = null, $fromName = null)
     {
         return $this->rota->swapMember($date, $toName, $fromName);
+    }
+
+    protected function stripAt($name): string
+    {
+        return str_replace('@', '', $name);
     }
 }
