@@ -61,6 +61,14 @@ class RotaManager
         return $this->rota->generate($date, $days);
     }
 
+    public function getMemberForToday()
+    {
+        $today = new DateTime();
+        return $this->dateValidator->isDateValid($today)
+            ? $this->getMemberForDate($today)
+            : null;
+    }
+
     public function getMemberForDate(DateTime $date)
     {
         return $this->rota->getMemberForDate($date);

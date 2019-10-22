@@ -26,7 +26,15 @@ class Who implements Operation
 
     public function run(array $args, $username)
     {
-        $member = $this->rotaManager->getMemberForDate(new DateTime());
-        $this->slack->send(sprintf('It is <@%s>\'s turn today', $member));
+        $this->slack->send(
+            $this->getResponseMessage($this->rotaManager->getMemberForToday())
+        );
+    }
+
+    protected function getResponseMessage($member)
+    {
+        return !is_null($member)
+            ? sprintf('It is <@%s>\'s turn today', $member)
+            : "There is no rota scheduled for today.";
     }
 }

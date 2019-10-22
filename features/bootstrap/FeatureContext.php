@@ -90,7 +90,7 @@ class FeatureContext implements SnippetAcceptingContext
     /**
      * @Given it is :username user's turn today
      */
-    public function isShoppingToday($username)
+    public function isUsersTurnToday($username)
     {
         $today = new DateTime;
         /** @var RotaManager $manager */
