@@ -6,6 +6,8 @@ use RgpJones\Rotabot\Slack\Slack;
 
 class Rota implements Operation
 {
+    const MIN_DAYS = 5;
+
     const MAX_DAYS = 20;
 
     /**
@@ -31,9 +33,11 @@ class Rota implements Operation
 
     public function run(array $args, $username)
     {
-        $days = count($this->rotaManager->getMembers());
-
-        $rota = $this->rotaManager->generateRota(new \DateTime(), $days);
+        $rota = $this->rotaManager->generateRota(
+            new \DateTime(),
+            max(count($this->rotaManager->getMembers()), self::MIN_DAYS)
+        );
+        
         $response = '';
         foreach ($rota as $date => $clubber) {
             $date = new \DateTime($date);
