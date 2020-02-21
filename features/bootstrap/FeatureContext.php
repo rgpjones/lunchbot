@@ -1,6 +1,6 @@
 <?php
 
-use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Pimple\Container;
 use RgpJones\Rotabot\Messenger\Memory;
@@ -12,7 +12,7 @@ use RgpJones\Rotabot\Storage\NullStorage;
 /**
  * Behat context class.
  */
-class FeatureContext implements SnippetAcceptingContext
+class FeatureContext implements Context
 {
     private $container;
 
