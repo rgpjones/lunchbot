@@ -5,9 +5,6 @@ use Pimple\Container;
 
 class Help implements Operation
 {
-    /**
-     * @var Container
-     */
     private $operations;
 
     public function __construct(Container $operations)

@@ -2,7 +2,7 @@
 namespace RgpJones\Rotabot\Operation;
 
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Slack\Slack;
+use RgpJones\Rotabot\Messenger\Messenger;
 
 class Rota implements Operation
 {
@@ -10,20 +10,14 @@ class Rota implements Operation
 
     const MAX_DAYS = 20;
 
-    /**
-     * @var RotaManager
-     */
     protected $rotaManager;
 
-    /**
-     * @var Slack
-     */
-    private $slack;
+    private $messenger;
 
-    public function __construct(RotaManager $rotaManager, Slack $slack)
+    public function __construct(RotaManager $rotaManager, Messenger $messenger)
     {
         $this->rotaManager = $rotaManager;
-        $this->slack = $slack;
+        $this->messenger = $messenger;
     }
 
     public function getUsage()
@@ -37,13 +31,13 @@ class Rota implements Operation
             new \DateTime(),
             max(count($this->rotaManager->getMembers()), self::MIN_DAYS)
         );
-        
+
         $response = '';
         foreach ($rota as $date => $clubber) {
             $date = new \DateTime($date);
             $response .= "{$date->format('l')}: {$clubber}\n";
         }
 
-        $this->slack->send($response);
+        $this->messenger->send($response);
     }
 }

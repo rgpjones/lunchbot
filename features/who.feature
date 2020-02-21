@@ -6,8 +6,8 @@ Feature: Rota users can see whose turn it is today
   Scenario: Who command issued
     Given I am a rota user
     And it is "test2" user's turn today
-    When I type "/rota who"
-    Then I should see in the channel
+    When I send the text "/rota who"
+    Then I should see the messenger response of
     """
     It is <@test2>'s turn today
     """

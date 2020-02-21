@@ -2,18 +2,18 @@
 namespace RgpJones\Rotabot\Operation;
 
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Slack\Slack;
+use RgpJones\Rotabot\Messenger\Messenger;
 use DateTime;
 
 class Swap implements Operation
 {
     protected $rotaManager;
-    protected $slack;
+    protected $messenger;
 
-    public function __construct(RotaManager $rotaManager, Slack $slack)
+    public function __construct(RotaManager $rotaManager, Messenger $messenger)
     {
         $this->rotaManager = $rotaManager;
-        $this->slack = $slack;
+        $this->messenger = $messenger;
     }
 
     public function getUsage()
@@ -34,6 +34,6 @@ class Swap implements Operation
 
         $this->rotaManager->swapMember(new DateTime(), $toUser, $fromUser);
 
-        $this->slack->send('Members swapped');
+        $this->messenger->send('Members swapped');
     }
 }

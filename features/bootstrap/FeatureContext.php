@@ -2,43 +2,32 @@
 
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
-use RgpJones\Rotabot\Application;
+use Pimple\Container;
+use RgpJones\Rotabot\Messenger\Memory;
+use RgpJones\Rotabot\Operation\OperationDelegator;
+use RgpJones\Rotabot\Operation\OperationProvider;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Storage\NullStorage;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Behat context class.
  */
 class FeatureContext implements SnippetAcceptingContext
 {
-    private $username;
+    private $container;
 
-    private $application;
+    private $operationDelegator;
 
     private $response;
-
-    private $config;
-
-    private $storage;
 
     /**
      * @BeforeScenario
      */
     public function setup()
     {
-        $this->config = new SimpleXMLElement('<config/>');
-        $this->config->webhook = 'http://example.com';
-        $this->storage = new NullStorage();
-
-        $this->application = new Application(
-            [
-                'config' => $this->config,
-                'storage' => $this->storage,
-                'debug' => true
-            ]
-        );
+        $this->container = new Container;
+        $this->registerServices($this->container);
+        $this->operationDelegator = new OperationDelegator(new OperationProvider());
     }
 
     /**
@@ -46,7 +35,6 @@ class FeatureContext implements SnippetAcceptingContext
      */
     public function tearDown()
     {
-        $this->storage = null;
     }
 
     /**
@@ -54,36 +42,26 @@ class FeatureContext implements SnippetAcceptingContext
      */
     public function iAmARotaUser()
     {
-        $this->username = 'test';
-        $this->application['rota_manager']->addMember($this->username);
+        $this->container['username'] = 'test';
+        $this->container['rota_manager']->addMember($this->container['username']);
     }
 
     /**
-     * @When I type :command
+     * @When I send the text :operationText
      */
-    public function iType($command)
+    public function iSendTheText($operationText)
     {
-        $text = trim(strstr($command, ' '));
-
-        $request = Request::create(
-            '/',
-            'POST',
-            [
-                'text'      => $text,
-                'user_name' => $this->username,
-            ]
-        );
-
-        $this->response = $this->application->handle($request);
+        $this->container['text'] = substr($operationText, 6);
+        $this->response = $this->operationDelegator->runOperation($this->container);
     }
 
     /**
-     * @Then I should see
+     * @Then I should receive a direct response of
      */
-    public function iShouldSee(PyStringNode $string)
+    public function iShouldReceiveADirectResponseOf(PyStringNode $string)
     {
-        if (strpos($this->response->getContent(), (string) $string) === false) {
-            throw new Exception(sprintf("Expected:\n%s\nbut got\n%s\n", $string, $this->response->getContent()));
+        if (strpos($this->response, (string) $string) === false) {
+            throw new \Exception(sprintf("Expected:\n%s\nbut got\n%s\n", $string, $this->response));
         }
     }
 
@@ -94,20 +72,39 @@ class FeatureContext implements SnippetAcceptingContext
     {
         $today = new DateTime;
         /** @var RotaManager $manager */
-        $manager = $this->application['rota_manager'];
+        $manager = $this->container['rota_manager'];
         $manager->addMember($username);
         $manager->setMemberForDate($today, $username);
     }
 
     /**
-     * @Then I should see in the channel
+     * @Then I should see the messenger response of
      */
-    public function iShouldSeeInTheChannel(PyStringNode $string)
+    public function iShouldSeeTheMessengerResponseOf(PyStringNode $string)
     {
-        $messages = $this->application['slack']->getMessages();
+        $messages = $this->container['messenger']->getMessages();
 
         if (strpos($messages[0], (string) $string) === false) {
             throw new Exception(sprintf('Expected %s but got %s', $string, $messages[0]));
         }
+    }
+
+
+
+    protected function registerServices(Container $container): Container
+    {
+        $container['storage'] = function () use ($container) {
+            return new NullStorage();
+        };
+
+        $container['rota_manager'] = function () use ($container) {
+            return new RotaManager($container['storage']);
+        };
+
+        $container['messenger'] = function () {
+            return new Memory();
+        };
+
+        return $container;
     }
 }

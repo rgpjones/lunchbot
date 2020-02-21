@@ -1,6 +1,6 @@
 <?php
 
-namespace RgpJones\Rotabot\Slack;
+namespace RgpJones\Rotabot\Messenger;
 
 class SlackCredentials
 {

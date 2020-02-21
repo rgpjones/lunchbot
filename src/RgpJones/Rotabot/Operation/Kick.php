@@ -2,17 +2,17 @@
 namespace RgpJones\Rotabot\Operation;
 
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Slack\Slack;
+use RgpJones\Rotabot\Messenger\Messenger;
 
 class Kick implements Operation
 {
     protected $rotaManager;
-    protected $slack;
+    protected $messenger;
 
-    public function __construct(RotaManager $rotaManager, Slack $slack)
+    public function __construct(RotaManager $rotaManager, Messenger $messenger)
     {
         $this->rotaManager = $rotaManager;
-        $this->slack = $slack;
+        $this->messenger = $messenger;
     }
 
     public function getUsage()
@@ -29,6 +29,6 @@ class Kick implements Operation
 
         $this->rotaManager->removeMember($user);
 
-        $this->slack->send("{$username} removed {$user} from the rota");
+        $this->messenger->send("{$username} removed {$user} from the rota");
     }
 }

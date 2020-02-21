@@ -2,18 +2,15 @@
 
 namespace RgpJones\Rotabot\Operation;
 
-use RgpJones\Rotabot\Slack\Slack;
+use RgpJones\Rotabot\Messenger\Messenger;
 
 class Hello implements Operation
 {
-    /**
-     * @var Slack
-     */
-    private $slack;
+    private $messenger;
 
-    public function __construct(Slack $slack)
+    public function __construct(Messenger $messenger)
     {
-        $this->slack = $slack;
+        $this->messenger = $messenger;
     }
 
     public function getUsage()
@@ -23,7 +20,7 @@ class Hello implements Operation
 
     public function run(array $args, $username)
     {
-        $this->slack->send('Hello!');
+        $this->messenger->send('Hello!');
         return '';
     }
 }

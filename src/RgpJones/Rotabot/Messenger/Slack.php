@@ -1,26 +1,22 @@
 <?php
-namespace RgpJones\Rotabot\Slack;
+namespace RgpJones\Rotabot\Messenger;
 
-class Slack
+class Slack implements Messenger
 {
     /**
      * @var array
      */
     private $config;
 
-    private $debug;
-    private $messages;
-
-    public function __construct(object $config, $debug = false)
+    public function __construct(object $config)
     {
         $this->config = $config;
-        $this->debug = $debug;
     }
 
-    public function send($message)
+    public function send(string $text)
     {
         $content['username'] = 'Rotabot';
-        $content['text'] = $message;
+        $content['text'] = $text;
         $content['icon_emoji'] = ':calendar:';
         $content['channel'] = (string) $this->config->channel;
 
@@ -35,15 +31,6 @@ class Slack
 
         curl_exec($ch);
 
-        $this->messages[] = $message;
         curl_close($ch);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMessages()
-    {
-        return $this->messages;
     }
 }

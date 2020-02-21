@@ -1,22 +1,19 @@
 <?php
 namespace RgpJones\Rotabot\Operation;
 
-use DateTime;
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Slack\Slack;
+use RgpJones\Rotabot\Messenger\Messenger;
 
 class Who implements Operation
 {
     protected $rotaManager;
-    /**
-     * @var Slack
-     */
-    private $slack;
 
-    public function __construct(RotaManager $rotaManager, Slack $slack)
+    private $messenger;
+
+    public function __construct(RotaManager $rotaManager, Messenger $messenger)
     {
         $this->rotaManager = $rotaManager;
-        $this->slack = $slack;
+        $this->messenger = $messenger;
     }
 
     public function getUsage()
@@ -26,7 +23,7 @@ class Who implements Operation
 
     public function run(array $args, $username)
     {
-        $this->slack->send(
+        $this->messenger->send(
             $this->getResponseMessage($this->rotaManager->getMemberForToday())
         );
     }

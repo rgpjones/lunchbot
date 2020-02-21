@@ -16,11 +16,11 @@ class OperationProvider implements ServiceProviderInterface
         $app['operations'] = new Container;
 
         $app['operations']['cancel'] = function () use ($app) {
-            return new Cancel($app['rota_manager'], $app['slack']);
+            return new Cancel($app['rota_manager'], $app['messenger']);
         };
 
         $app['operations']['hello'] = function () use ($app) {
-            return new Hello($app['slack']);
+            return new Hello($app['messenger']);
         };
 
         $app['operations']['help'] = function () use ($app) {
@@ -28,19 +28,23 @@ class OperationProvider implements ServiceProviderInterface
         };
 
         $app['operations']['join'] = function () use ($app) {
-            return new Join($app['rota_manager'], $app['slack']);
+            return new Join($app['rota_manager'], $app['messenger']);
         };
 
         $app['operations']['kick'] = function () use ($app) {
-            return new Kick($app['rota_manager'], $app['slack']);
+            return new Kick($app['rota_manager'], $app['messenger']);
         };
 
         $app['operations']['leave'] = function () use ($app) {
-            return new Leave($app['rota_manager'], $app['slack']);
+            return new Leave($app['rota_manager'], $app['messenger']);
+        };
+
+        $app['operations']['ping'] = function () use ($app) {
+            return new Ping();
         };
 
         $app['operations']['rota'] = function () use ($app) {
-            return new Rota($app['rota_manager'], $app['slack']);
+            return new Rota($app['rota_manager'], $app['messenger']);
         };
 
         $app['operations']['skip'] = function () use ($app) {
@@ -48,11 +52,11 @@ class OperationProvider implements ServiceProviderInterface
         };
 
         $app['operations']['swap'] = function () use ($app) {
-            return new Swap($app['rota_manager'], $app['slack']);
+            return new Swap($app['rota_manager'], $app['messenger']);
         };
 
         $app['operations']['who'] = function () use ($app) {
-            return new Who($app['rota_manager'], $app['slack']);
+            return new Who($app['rota_manager'], $app['messenger']);
         };
     }
 }

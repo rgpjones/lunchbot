@@ -29,6 +29,9 @@
     "doctrine/lexer": {
         "version": "1.1.0"
     },
+    "php": {
+        "version": "7.3"
+    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -82,9 +85,6 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
-    },
-    "silex/silex": {
-        "version": "v2.3.0"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",

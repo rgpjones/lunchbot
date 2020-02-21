@@ -2,17 +2,17 @@
 namespace RgpJones\Rotabot\Operation;
 
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Slack\Slack;
+use RgpJones\Rotabot\Messenger\Messenger;
 
 class Leave implements Operation
 {
     protected $rotaManager;
-    protected $slack;
+    protected $messenger;
 
-    public function __construct(RotaManager $rotaManager, Slack $slack)
+    public function __construct(RotaManager $rotaManager, Messenger $messenger)
     {
         $this->rotaManager = $rotaManager;
-        $this->slack = $slack;
+        $this->messenger = $messenger;
     }
 
     public function getUsage()
@@ -27,6 +27,6 @@ class Leave implements Operation
         }
         $this->rotaManager->removeMember($username);
 
-        $this->slack->send("{$username} has left the rota");
+        $this->messenger->send("{$username} has left the rota");
     }
 }

@@ -3,8 +3,8 @@
     "license": "proprietary",
     "require": {
         "php": "^7.3",
+        "pimple/pimple": "^3.2",
         "sensio/framework-extra-bundle": "^5.4",
-        "silex/silex": "*",
         "symfony/console": "^4.3",
         "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.4",
@@ -59,8 +59,8 @@
         ],
         "test": [
             "@sniff",
-            "@spec",
-            "@acceptance"
+            "@acceptance",
+            "@spec"
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",

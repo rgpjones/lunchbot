@@ -2,7 +2,7 @@
 namespace RgpJones\Rotabot\Operation;
 
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Slack\Slack;
+use RgpJones\Rotabot\Messenger\Messenger;
 
 class Join implements Operation
 {
@@ -12,14 +12,14 @@ class Join implements Operation
     protected $rotaManager;
 
     /**
-     * @var Slack
+     * @var Messenger
      */
-    private $slack;
+    private $messenger;
 
-    public function __construct(RotaManager $rotaManager, Slack $slack)
+    public function __construct(RotaManager $rotaManager, Messenger $messenger)
     {
         $this->rotaManager = $rotaManager;
-        $this->slack = $slack;
+        $this->messenger = $messenger;
     }
 
     public function getUsage()
@@ -38,6 +38,6 @@ class Join implements Operation
         }
         $this->rotaManager->addMember($username);
 
-        $this->slack->send("{$username} has joined the rota");
+        $this->messenger->send("{$username} has joined the rota");
     }
 }

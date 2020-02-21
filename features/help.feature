@@ -5,8 +5,8 @@ Feature: Get Command Help
 
   Scenario: User sends help command
     Given I am a rota user
-    When I type "/rota help"
-    Then I should see
+    When I send the text "/rota help"
+    Then I should receive a direct response of
     """
 /rota <operation>
 `cancel` [date]: Cancel rota for today, or on date specified (Y-m-d)
@@ -15,6 +15,7 @@ Feature: Get Command Help
 `join`: Join rota
 `kick` <person>: Remove person from rota
 `leave`: Leave rota
+`ping`: Return a pong response
 `rota`: Show the upcoming rota
 `skip`: Skip current member, and pull remaining rota forwards
 `swap` [member1] [member2]: Swap shopping duty between member1 and member2. Without member2 specified, member1 is swapped with current member. With no members specified today and next day are swapped
@@ -22,8 +23,9 @@ Feature: Get Command Help
     """
 
     Scenario: User sends incorrect command
-      When I type "/rota asiudhoaisdh"
-      Then I should see
+      Given I am a rota user
+      When I send the text "/rota asiudhoaisdh"
+      Then I should receive a direct response of
       """
 /rota <operation>
 `cancel` [date]: Cancel rota for today, or on date specified (Y-m-d)
@@ -32,6 +34,7 @@ Feature: Get Command Help
 `join`: Join rota
 `kick` <person>: Remove person from rota
 `leave`: Leave rota
+`ping`: Return a pong response
 `rota`: Show the upcoming rota
 `skip`: Skip current member, and pull remaining rota forwards
 `swap` [member1] [member2]: Swap shopping duty between member1 and member2. Without member2 specified, member1 is swapped with current member. With no members specified today and next day are swapped

@@ -3,24 +3,18 @@ namespace RgpJones\Rotabot\Operation;
 
 use RgpJones\Rotabot\RotaManager;
 use DateTime;
-use RgpJones\Rotabot\Slack\Slack;
+use RgpJones\Rotabot\Messenger\Messenger;
 
 class Cancel implements Operation
 {
-    /**
-     * @var RotaManager
-     */
     protected $rotaManager;
 
-    /**
-     * @var Slack
-     */
-    private $slack;
+    private $messenger;
 
-    public function __construct(RotaManager $rotaManager, Slack $slack)
+    public function __construct(RotaManager $rotaManager, Messenger $messenger)
     {
         $this->rotaManager = $rotaManager;
-        $this->slack = $slack;
+        $this->messenger = $messenger;
     }
 
     public function getUsage()
@@ -40,6 +34,6 @@ class Cancel implements Operation
             $message = "Couldn't cancel rota on ";
         }
 
-        $this->slack->send($message . $date->format('l, jS F Y'));
+        $this->messenger->send($message . $date->format('l, jS F Y'));
     }
 }
