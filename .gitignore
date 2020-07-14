@@ -4,6 +4,7 @@ composer.phar
 var/
 vendor/
 config.xml
+/.env
 
 ###> symfony/framework-bundle ###
 /.env.local
