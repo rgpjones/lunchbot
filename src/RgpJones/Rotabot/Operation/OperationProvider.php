@@ -39,7 +39,7 @@ class OperationProvider implements ServiceProviderInterface
             return new Leave($app['rota_manager'], $app['messenger']);
         };
 
-        $app['operations']['ping'] = function () use ($app) {
+        $app['operations']['ping'] = function () {
             return new Ping();
         };
 
