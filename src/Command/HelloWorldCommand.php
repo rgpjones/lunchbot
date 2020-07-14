@@ -1,11 +1,11 @@
 <?php
 
-namespace Inviqa\Base\Command;
+namespace App\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConfigureCommand extends Command
+class HelloWorldCommand extends Command
 {
     public function __construct()
     {
@@ -14,11 +14,11 @@ class ConfigureCommand extends Command
 
     protected function configure()
     {
-        $this->setName('configure');
+        $this->setName('hello-world');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $input->setInteractive(true);
+        $output->writeln('hello-world');
     }
 }

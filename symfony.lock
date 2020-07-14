@@ -8,9 +8,6 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
-    "container-interop/container-interop": {
-        "version": "1.2.0"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {

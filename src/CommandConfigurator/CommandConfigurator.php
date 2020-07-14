@@ -1,6 +1,6 @@
 <?php
 
-namespace Inviqa\Base\CommandConfigurator;
+namespace App\CommandConfigurator;
 
 use Symfony\Component\Console\Command\Command;
 
