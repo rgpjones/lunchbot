@@ -1,8 +1,8 @@
 <?php
 namespace RgpJones\Rotabot\Operation;
 
+use RgpJones\Rotabot\Notifier\Notifier;
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Messenger\Messenger;
 
 class Who implements Operation
 {
@@ -10,7 +10,7 @@ class Who implements Operation
 
     private $messenger;
 
-    public function __construct(RotaManager $rotaManager, Messenger $messenger)
+    public function __construct(RotaManager $rotaManager, Notifier $messenger)
     {
         $this->rotaManager = $rotaManager;
         $this->messenger = $messenger;

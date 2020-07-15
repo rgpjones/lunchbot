@@ -1,8 +1,8 @@
 <?php
 
-namespace RgpJones\Rotabot\Messenger;
+namespace RgpJones\Rotabot\Notifier;
 
-class Memory implements Messenger
+class Memory implements Notifier
 {
     private $messages = [];
 

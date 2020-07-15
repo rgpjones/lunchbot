@@ -3,7 +3,7 @@
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Pimple\Container;
-use RgpJones\Rotabot\Messenger\Memory;
+use RgpJones\Rotabot\Notifier\Memory;
 use RgpJones\Rotabot\Operation\OperationDelegator;
 use RgpJones\Rotabot\Operation\OperationProvider;
 use RgpJones\Rotabot\RotaManager;

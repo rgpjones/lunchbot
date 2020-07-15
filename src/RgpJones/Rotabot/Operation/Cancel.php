@@ -1,9 +1,9 @@
 <?php
 namespace RgpJones\Rotabot\Operation;
 
+use RgpJones\Rotabot\Notifier\Notifier;
 use RgpJones\Rotabot\RotaManager;
 use DateTime;
-use RgpJones\Rotabot\Messenger\Messenger;
 
 class Cancel implements Operation
 {
@@ -11,7 +11,7 @@ class Cancel implements Operation
 
     private $messenger;
 
-    public function __construct(RotaManager $rotaManager, Messenger $messenger)
+    public function __construct(RotaManager $rotaManager, Notifier $messenger)
     {
         $this->rotaManager = $rotaManager;
         $this->messenger = $messenger;

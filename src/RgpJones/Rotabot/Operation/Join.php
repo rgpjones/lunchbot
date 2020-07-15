@@ -1,22 +1,16 @@
 <?php
 namespace RgpJones\Rotabot\Operation;
 
+use RgpJones\Rotabot\Notifier\Notifier;
 use RgpJones\Rotabot\RotaManager;
-use RgpJones\Rotabot\Messenger\Messenger;
 
 class Join implements Operation
 {
-    /**
-     * @var RotaManager
-     */
     protected $rotaManager;
 
-    /**
-     * @var Messenger
-     */
     private $messenger;
 
-    public function __construct(RotaManager $rotaManager, Messenger $messenger)
+    public function __construct(RotaManager $rotaManager, Notifier $messenger)
     {
         $this->rotaManager = $rotaManager;
         $this->messenger = $messenger;

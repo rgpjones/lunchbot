@@ -2,13 +2,13 @@
 
 namespace RgpJones\Rotabot\Operation;
 
-use RgpJones\Rotabot\Messenger\Messenger;
+use RgpJones\Rotabot\Notifier\Notifier;
 
 class Hello implements Operation
 {
     private $messenger;
 
-    public function __construct(Messenger $messenger)
+    public function __construct(Notifier $messenger)
     {
         $this->messenger = $messenger;
     }
