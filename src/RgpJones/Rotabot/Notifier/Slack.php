@@ -3,14 +3,11 @@ namespace RgpJones\Rotabot\Notifier;
 
 class Slack implements Notifier
 {
-    /**
-     * @var array
-     */
-    private $config;
+    private $slackConfiguration;
 
-    public function __construct(object $config)
+    public function __construct(SlackConfiguration $slackConfiguration)
     {
-        $this->config = $config;
+        $this->slackConfiguration = $slackConfiguration;
     }
 
     public function send(string $text)
@@ -18,14 +15,14 @@ class Slack implements Notifier
         $content['username'] = 'Rotabot';
         $content['text'] = $text;
         $content['icon_emoji'] = ':calendar:';
-        $content['channel'] = (string) $this->config->channel;
+        $content['channel'] = (string) $this->slackConfiguration->getChannel();
 
         $payload = sprintf("payload=%s", json_encode($content));
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_URL, (string) $this->config->webhook);
+        curl_setopt($ch, CURLOPT_URL, $this->slackConfiguration->getWebhook());
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 

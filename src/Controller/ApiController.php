@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use Pimple\Container;
+use RgpJones\Rotabot\Notifier\SlackConfiguration;
 use RgpJones\Rotabot\Operation\OperationDelegator;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Notifier\Slack;
-use RgpJones\Rotabot\Notifier\SlackCredentials;
 use RgpJones\Rotabot\Storage\FileStorage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,17 +21,13 @@ class ApiController extends AbstractController
     public function api(
         Request $request,
         OperationDelegator $operationDelegator,
-        SlackCredentials $slackCredentials
+        SlackConfiguration $slackConfiguration
     ): Response {
 
-        if ($request->get('token') != $slackCredentials->getSlackToken()) {
-            throw new \RunTimeException('The request did not provide the correct Slack authorisation token');
-        }
-
-        $config = $this->buildConfigEntity($request, $slackCredentials);
+        $slackConfiguration->setRequest($request);
 
         $container = new Container();
-        $container['config'] = $config;
+        $container['config'] = $slackConfiguration;
         $container['username'] = $request->get('user_name');
         $container['text'] = trim($request->get('text'));
 
@@ -42,20 +38,10 @@ class ApiController extends AbstractController
 
 
 
-    protected function buildConfigEntity(Request $request, SlackCredentials $slackCredentials): \stdClass
-    {
-        $config = new \stdClass;
-        $config->token = $slackCredentials->getSlackToken();
-        $config->webhook = $slackCredentials->getSlackWebhookUrl();
-        $config->user = $request->get('user_name');
-        $config->channel = $request->get('channel_name');
-        return $config;
-    }
-
     protected function registerServices(Container $container): Container
     {
         $container['storage'] = function () use ($container) {
-            return new FileStorage($container['config']->channel);
+            return new FileStorage($container['config']->getChannel());
         };
 
         $container['rota_manager'] = function () use ($container) {
