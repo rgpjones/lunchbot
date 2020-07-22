@@ -3,6 +3,7 @@
 namespace RgpJones\Rotabot\Notifier;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class SlackConfiguration
 {
@@ -14,20 +15,18 @@ class SlackConfiguration
 
     private $channel;
 
-    public function __construct(SlackCredentials $slackCredentials)
+    public function __construct(RequestStack $requestStack, SlackCredentials $slackCredentials)
     {
-        $this->token = $slackCredentials->getSlackToken();
-        $this->webhook = $slackCredentials->getSlackWebhookUrl();
-    }
+        $request = $requestStack->getCurrentRequest();
 
-    public function setRequest(Request $request)
-    {
-        if ($request->get('token') != $this->getToken()) {
+        if ($request->get('token') != $slackCredentials->getSlackToken()) {
             throw new SlackTokenMismatchException(
                 'The request did not provide the correct Slack authorisation token'
             );
         }
 
+        $this->token = $slackCredentials->getSlackToken();
+        $this->webhook = $slackCredentials->getSlackWebhookUrl();
         $this->user = $request->get('user_name');
         $this->channel = $request->get('channel_name');
     }

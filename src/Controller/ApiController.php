@@ -24,8 +24,6 @@ class ApiController extends AbstractController
         SlackConfiguration $slackConfiguration
     ): Response {
 
-        $slackConfiguration->setRequest($request);
-
         $container = new Container();
         $container['config'] = $slackConfiguration;
         $container['username'] = $request->get('user_name');
