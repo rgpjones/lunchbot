@@ -9,7 +9,6 @@ use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Notifier\Slack;
 use RgpJones\Rotabot\Storage\FileStorage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,15 +18,14 @@ class ApiController extends AbstractController
      * @Route("/", methods={"POST"})
      */
     public function api(
-        Request $request,
         OperationDelegator $operationDelegator,
         SlackConfiguration $slackConfiguration
     ): Response {
 
         $container = new Container();
         $container['config'] = $slackConfiguration;
-        $container['username'] = $request->get('user_name');
-        $container['text'] = trim($request->get('text'));
+        $container['username'] = $slackConfiguration->getUser();
+        $container['text'] = $slackConfiguration->getInputText();
 
         $container = $this->registerServices($container);
 

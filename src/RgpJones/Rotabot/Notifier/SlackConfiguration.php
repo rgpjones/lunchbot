@@ -14,6 +14,8 @@ class SlackConfiguration
 
     private $channel;
 
+    private $inputText;
+
     public function __construct(RequestStack $requestStack, SlackCredentials $slackCredentials)
     {
         $request = $requestStack->getCurrentRequest();
@@ -28,6 +30,7 @@ class SlackConfiguration
         $this->webhook = $slackCredentials->getSlackWebhookUrl();
         $this->user = $request->get('user_name');
         $this->channel = $request->get('channel_name');
+        $this->inputText = trim($request->get('text'));
     }
 
     public function getToken(): string
@@ -48,5 +51,10 @@ class SlackConfiguration
     public function getChannel(): string
     {
         return $this->channel;
+    }
+
+    public function getInputText()
+    {
+        return $this->inputText;
     }
 }
