@@ -2,7 +2,6 @@
 
 namespace RgpJones\Rotabot\Notifier;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class SlackConfiguration
