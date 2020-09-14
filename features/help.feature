@@ -12,7 +12,7 @@ Feature: Get Command Help
 `cancel` [date]: Cancel rota for today, or on date specified (Y-m-d)
 `hello`: Say hello!
 `help`: Display this help text
-`join`: Join rota
+`join` [username]: Join the rota. Add [username] to add a specific person
 `kick` <person>: Remove person from rota
 `leave`: Leave rota
 `ping`: Return a pong response
@@ -31,7 +31,7 @@ Feature: Get Command Help
 `cancel` [date]: Cancel rota for today, or on date specified (Y-m-d)
 `hello`: Say hello!
 `help`: Display this help text
-`join`: Join rota
+`join` [username]: Join the rota. Add [username] to add a specific person
 `kick` <person>: Remove person from rota
 `leave`: Leave rota
 `ping`: Return a pong response
