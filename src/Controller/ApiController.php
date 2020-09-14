@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Pimple\Container;
 use RgpJones\Rotabot\Notifier\SlackConfiguration;
-use RgpJones\Rotabot\Operation\OperationDelegator;
+use RgpJones\Rotabot\RotabotService;
 use RgpJones\Rotabot\RotaManager;
 use RgpJones\Rotabot\Notifier\Slack;
 use RgpJones\Rotabot\Storage\FileStorage;
@@ -17,38 +17,9 @@ class ApiController extends AbstractController
     /**
      * @Route("/", methods={"POST"})
      */
-    public function api(
-        OperationDelegator $operationDelegator,
-        SlackConfiguration $slackConfiguration
-    ): Response {
-
-        $container = new Container();
-        $container['config'] = $slackConfiguration;
-        $container['username'] = $slackConfiguration->getUser();
-        $container['text'] = $slackConfiguration->getInputText();
-
-        $container = $this->registerServices($container);
-
-        return $this->prepareResponse((string) $operationDelegator->runOperation($container));
-    }
-
-
-
-    protected function registerServices(Container $container): Container
+    public function api(RotabotService $rotabotService, SlackConfiguration $slackConfiguration): Response
     {
-        $container['storage'] = function () use ($container) {
-            return new FileStorage($container['config']->getChannel());
-        };
-
-        $container['rota_manager'] = function () use ($container) {
-            return new RotaManager($container['storage']);
-        };
-
-        $container['messenger'] = function () use ($container) {
-            return new Slack($container['config']);
-        };
-
-        return $container;
+        return $this->prepareResponse((string) $rotabotService->run($slackConfiguration));
     }
 
     protected function prepareResponse(string $response): Response
