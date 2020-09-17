@@ -35,3 +35,8 @@ services:
         arguments:
             - "%env(SLACK_CALLBACK_HOOK)%"
             - "%env(SLACK_TOKEN)%"
+
+    RgpJones\Rotabot\RotabotService:
+        arguments:
+            - "@RgpJones\\Rotabot\\Operation\\OperationDelegator"
+            - "@RgpJones\\Rotabot\\Storage\\FileStorageFactory"
