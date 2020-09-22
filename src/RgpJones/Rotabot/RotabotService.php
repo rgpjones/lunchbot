@@ -6,15 +6,18 @@ use Pimple\Container;
 use RgpJones\Rotabot\Notifier\Slack;
 use RgpJones\Rotabot\Notifier\SlackConfiguration;
 use RgpJones\Rotabot\Operation\OperationDelegator;
-use RgpJones\Rotabot\Storage\FileStorage;
+use RgpJones\Rotabot\Storage\StorageFactory;
 
 class RotabotService
 {
     private $operationDelegator;
 
-    public function __construct(OperationDelegator $operationDelegator)
+    private $storageFactory;
+
+    public function __construct(OperationDelegator $operationDelegator, StorageFactory $storageFactory)
     {
         $this->operationDelegator = $operationDelegator;
+        $this->storageFactory = $storageFactory;
     }
 
     public function run(SlackConfiguration $slackConfiguration)
@@ -32,7 +35,7 @@ class RotabotService
     protected function registerServices(Container $container): Container
     {
         $container['storage'] = function () use ($container) {
-            return new FileStorage($container['config']->getChannel());
+            return $this->storageFactory->getStorage($container['config']->getChannel());
         };
 
         $container['rota_manager'] = function () use ($container) {
